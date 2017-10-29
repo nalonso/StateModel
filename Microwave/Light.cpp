@@ -1,8 +1,7 @@
 #include "Light.h"
 
-Light::Light(System::Windows::Forms::PictureBox ^ container)
+Light::Light()
 {
-	this->lightContainer = container;
 	this->currentState = (gcnew OffLightState(this));
 }
 
@@ -20,9 +19,9 @@ void Light::off()
 	this->currentState->off(this);
 }
 
-void Light::setImage(System::String ^ path)
+void Light::setCallback(callback^ function)
 {
-	this->lightContainer->ImageLocation = path;
+	this->onChangeState = function;
 }
 
 void OnLightState::setState(Light ^ light, IStateLight ^ newState)
@@ -34,7 +33,8 @@ void OnLightState::setState(Light ^ light, IStateLight ^ newState)
 
 OnLightState::OnLightState(Light ^ light)
 {
-	light->setImage(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\lightOn.jpg");
+	if(light->onChangeState != nullptr)
+		light->onChangeState(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\lightOn.jpg");
 }
 
 OnLightState::~OnLightState()
@@ -64,7 +64,8 @@ void OffLightState::setState(Light ^ light, IStateLight ^ newState)
 
 OffLightState::OffLightState(Light ^ light)
 {
-	light->setImage(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\lightOff.jpg");
+	if (light->onChangeState != nullptr)
+		light->onChangeState(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\lightOff.jpg");
 }
 
 OffLightState::~OffLightState()

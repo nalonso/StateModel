@@ -53,6 +53,9 @@
     <ClInclude Include="Waves.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TypeDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\lightOff.jpg">

@@ -1,22 +1,23 @@
 #pragma once
 #ifndef __Light__
 #define __Light__
+#include "TypeDef.h"
 
 ref class IStateLight;
 
 ref class Light
 {
 private:
-	System::Windows::Forms::PictureBox^ lightContainer;
 public:
-	Light(System::Windows::Forms::PictureBox ^ container);
+	Light();
 	~Light();
 	IStateLight^ currentState;
+	callback^ onChangeState;
 
 	void on();
 	void off();
 
-	void setImage(System::String^ path);
+	void setCallback(callback^ function);
 };
 
 ref class IStateLight

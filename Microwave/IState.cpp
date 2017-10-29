@@ -10,6 +10,8 @@ void IdleState::setState(Microwaves^ microwave, IState^ nexState)
 
 IdleState::IdleState(Microwaves^ microwave)
 {
+	if(microwave->onChangeState != nullptr)
+		microwave->onChangeState(this->getName());
 	microwave->timer->clear();
 	microwave->waves->off();
 	microwave->light->off();
@@ -52,6 +54,8 @@ void CookingState::setState(Microwaves^ microwave, IState^ nexState)
 
 CookingState::CookingState(Microwaves^ microwave)
 {
+	if (microwave->onChangeState != nullptr)
+	 microwave->onChangeState(this->getName());
 	microwave->timer->setTime();
 	microwave->light->on();
 	microwave->waves->on();
@@ -95,6 +99,8 @@ void ExtendTimeState::setState(Microwaves^ microwave, IState^ nexState)
 
 ExtendTimeState::ExtendTimeState(Microwaves^ microwave)
 {
+	if (microwave->onChangeState != nullptr)
+		microwave->onChangeState(this->getName());
 	microwave->timer->addTime();
 }
 
@@ -136,6 +142,8 @@ void OpenDoorState::setState(Microwaves^ microwave, IState^ nexState)
 
 OpenDoorState::OpenDoorState(Microwaves^ microwave)
 {
+	if (microwave->onChangeState != nullptr)
+		microwave->onChangeState(this->getName());
 	microwave->timer->pause();
 	microwave->light->on();
 	microwave->waves->off();
@@ -177,6 +185,8 @@ void CompleteState::setState(Microwaves^ microwave, IState^ nexState)
 
 CompleteState::CompleteState(Microwaves^ microwave)
 {
+	if (microwave->onChangeState != nullptr)
+		microwave->onChangeState(this->getName());
 	microwave->timer->clear();
 	microwave->light->off();
 	microwave->waves->off();

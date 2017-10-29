@@ -2,13 +2,13 @@
 
 void Microwaves::showCurrentState()
 {
-	this->state->Text = this->getCurrentState();
+	this->onChangeState (this->getCurrentState());
 }
 
-Microwaves::Microwaves(System::Windows::Forms::PictureBox ^ light, System::Windows::Forms::PictureBox ^ waves)
+Microwaves::Microwaves()
 {
-	this->setLightContainer(light);
-	this->setWavesContainer(waves);
+	this->light = (gcnew Light());
+	this->waves = (gcnew Wave());
 	this->timer = (gcnew Countdown(this));
 	this->currentState = (gcnew IdleState(this));
 }
@@ -20,27 +20,6 @@ void Microwaves::soundBeper()
 System::String^ Microwaves::getCurrentState()
 {
 	return currentState->getName();
-}
-
-void Microwaves::setTimerContainer(System::Windows::Forms::Label ^ extLabel)
-{
-	this->timer->setExternalLabel(extLabel);
-}
-
-void Microwaves::setStateContainer(System::Windows::Forms::Label ^ extLabel)
-{
-	this->state = extLabel;
-	this->showCurrentState();
-}
-
-void Microwaves::setLightContainer(System::Windows::Forms::PictureBox ^ extPicture)
-{
-	this->light = (gcnew Light(extPicture));
-}
-
-void Microwaves::setWavesContainer(System::Windows::Forms::PictureBox ^ extPicture)
-{
-	this->waves = (gcnew Wave(extPicture));
 }
 
 void Microwaves::pushBtn()
@@ -65,4 +44,24 @@ void Microwaves::timeOut()
 {
 	this->currentState->timeOut(this);
 	this->showCurrentState();
+}
+
+void Microwaves::setCallbackChangeTimer(callback^ function)
+{
+	this->timer->setCallback(function);
+}
+
+void Microwaves::setCallbackChangeState(callback^ function)
+{
+	this->onChangeState = function;
+}
+
+void Microwaves::setCallbackChangeLight(callback^ function)
+{
+	this->light->setCallback(function);
+}
+
+void Microwaves::setCallbackChangeWave(callback^ function)
+{
+	this->waves->setCallback(function);
 }

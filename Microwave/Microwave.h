@@ -1,6 +1,7 @@
 #pragma once
 #ifndef __Microwaves__
 #define __Microwaves__
+#include "TypeDef.h"
 #include "IState.h"
 #include "Countdown.h"
 #include "Light.h"
@@ -15,11 +16,9 @@ private:
 	System::Windows::Forms::Label^ state;
 	void showCurrentState();
 	System::String^ getCurrentState();
-	void setLightContainer(System::Windows::Forms::PictureBox^ extPicture);
-	void setWavesContainer(System::Windows::Forms::PictureBox^ extPicture);
 
 public:
-	Microwaves(System::Windows::Forms::PictureBox ^ light, System::Windows::Forms::PictureBox ^ waves);
+	Microwaves();
 
 	IState^ currentState;
 	Countdown^ timer;
@@ -34,9 +33,13 @@ public:
 	void closeDoor();
 	void timeOut();
 
-	//Auxiliar Functions
-	void setTimerContainer(System::Windows::Forms::Label^ extLabel);
-	void setStateContainer(System::Windows::Forms::Label^ extLabel);
+	//Set Callbacks Functions
+	void setCallbackChangeTimer(callback^ function);
+	void setCallbackChangeState(callback^ function);
+	void setCallbackChangeLight(callback^ function);
+	void setCallbackChangeWave(callback^ function);
+
+	callback^ onChangeState;
 };
 
 #endif // !__Microwaves__

@@ -14,26 +14,39 @@ Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
+Class callback: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, SpecialName, RTSpecialName
+  Methods:
+    Invoke(String): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    BeginInvoke(String, AsyncCallback, Object): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Final, Virtual, VtableLayoutMask
 Class Microwaves: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
-    Void .ctor(System.Windows.Forms.PictureBox, System.Windows.Forms.PictureBox): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
     IState currentState : Public
     Countdown timer : Public
     Light light : Public
     Wave waves : Public
+    callback onChangeState : Public
   Methods:
     soundBeper(): PrivateScope, Public, HideBySig
     pushBtn(): PrivateScope, Public, HideBySig
     openDoor(): PrivateScope, Public, HideBySig
     closeDoor(): PrivateScope, Public, HideBySig
     timeOut(): PrivateScope, Public, HideBySig
-    setTimerContainer(Label): PrivateScope, Public, HideBySig
-    setStateContainer(Label): PrivateScope, Public, HideBySig
+    setCallbackChangeTimer(callback): PrivateScope, Public, HideBySig
+    setCallbackChangeState(callback): PrivateScope, Public, HideBySig
+    setCallbackChangeLight(callback): PrivateScope, Public, HideBySig
+    setCallbackChangeWave(callback): PrivateScope, Public, HideBySig
 Class Countdown: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(Microwaves): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    callback onChangeState : Public
   Methods:
+    setTextExternalLabel(): PrivateScope, Public, HideBySig
     onTick(Object, EventArgs): PrivateScope, Public, HideBySig
-    setExternalLabel(Label): PrivateScope, Public, HideBySig
+    setCallback(callback): PrivateScope, Public, HideBySig
     setTime(Int32): PrivateScope, Public, HideBySig
     setTime(): PrivateScope, Public, HideBySig
     addTime(Int32): PrivateScope, Public, HideBySig
@@ -43,3 +56,8 @@ Class Countdown: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
 Class MicrowaveForm.MicrowaveForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    setCurrenStateLabel(String): PrivateScope, Public, Static, HideBySig
+    setTimerLabel(String): PrivateScope, Public, Static, HideBySig
+    setLight(String): PrivateScope, Public, Static, HideBySig
+    setWaves(String): PrivateScope, Public, Static, HideBySig

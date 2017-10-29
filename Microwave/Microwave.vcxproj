@@ -149,6 +149,7 @@
     <ClInclude Include="MicrowaveForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="TypeDef.h" />
     <ClInclude Include="Waves.h" />
   </ItemGroup>
   <ItemGroup>

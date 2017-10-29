@@ -45,14 +45,18 @@ namespace MicrowaveForm {
 	private: System::Windows::Forms::Button^  openDoorBtn;
 	private: System::Windows::Forms::Button^  cookingBtn;
 	private: System::Windows::Forms::Button^  closeDoorBtn;
+	private: static System::Windows::Forms::Label^  timerLabel;
 
-	private: System::Windows::Forms::Label^  timerLabel;
+
 	private: System::Windows::Forms::Label^  stateCurrent;
-	private: System::Windows::Forms::Label^  currentStateLabel;
+	private: static System::Windows::Forms::Label^  currentStateLabel;
+	private: static System::Windows::Forms::PictureBox^  lightBulbs;
 
-	private: System::Windows::Forms::PictureBox^  lightBulbs;
+
+
 	private: System::Windows::Forms::PictureBox^  microwaveLogo;
-	private: System::Windows::Forms::PictureBox^  microwaveImage;
+	private: static System::Windows::Forms::PictureBox^  microwaveImage;
+
 
 
 	private: Microwaves^ microwave;
@@ -124,6 +128,7 @@ namespace MicrowaveForm {
 			// 
 			// lightBulbs
 			// 
+			this->lightBulbs->ImageLocation = L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\lightOff.jpg";
 			this->lightBulbs->Location = System::Drawing::Point(12, 12);
 			this->lightBulbs->Name = L"lightBulbs";
 			this->lightBulbs->Size = System::Drawing::Size(160, 160);
@@ -133,6 +138,7 @@ namespace MicrowaveForm {
 			// 
 			// microwaveImage
 			// 
+			this->microwaveImage->ImageLocation = L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\microwavesOff.gif";
 			this->microwaveImage->Location = System::Drawing::Point(178, 112);
 			this->microwaveImage->Name = L"microwaveImage";
 			this->microwaveImage->Size = System::Drawing::Size(190, 60);
@@ -216,9 +222,11 @@ namespace MicrowaveForm {
 #pragma endregion
 		private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 			//Microwaves
-			this->microwave = (gcnew Microwaves(this->lightBulbs,this->microwaveImage));
-			this->microwave->setTimerContainer(this->timerLabel);
-			this->microwave->setStateContainer(this->currentStateLabel);
+			this->microwave = (gcnew Microwaves());
+			this->microwave->setCallbackChangeTimer(gcnew callback(&this->setTimerLabel));
+			this->microwave->setCallbackChangeState(gcnew callback(&this->setCurrenStateLabel));
+			this->microwave->setCallbackChangeLight(gcnew callback(&this->setLight));
+			this->microwave->setCallbackChangeWave(gcnew callback(&this->setWaves));
 		}
 		private: System::Void cookingBtn_Click(System::Object^  sender, System::EventArgs^  e) {
 			this->microwave->pushBtn();
@@ -229,6 +237,28 @@ namespace MicrowaveForm {
 		private: System::Void closeDoorBtn_Click(System::Object^  sender, System::EventArgs^  e) {
 			this->microwave->closeDoor();
 		}
+		public:
+
+			static System::Void setCurrenStateLabel(System::String^ Text)
+			{
+				MicrowaveForm::currentStateLabel->Text = Text;
+			}
+			static System::Void setTimerLabel(System::String^ Text)
+			{
+				MicrowaveForm::timerLabel->Text = Text;
+			}
+			static System::Void setLight(System::String^ Text)
+			{
+				MicrowaveForm::lightBulbs->ImageLocation = Text;
+			}
+			static System::Void setWaves(System::String^ Text)
+			{
+				MicrowaveForm::microwaveImage->ImageLocation = Text;
+			}
+			
 };
+
+
+
 }
 #endif // !__MicrowaveForm__

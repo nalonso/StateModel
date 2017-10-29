@@ -1,22 +1,23 @@
 #pragma once
 #ifndef __Waves__
 #define __Waves__
-
+#include "TypeDef.h"
 ref class IStateWave;
 
 ref class Wave
 {
 private:
-	System::Windows::Forms::PictureBox^ waveContainer;
+
 public:
-	Wave(System::Windows::Forms::PictureBox^ container);
+	Wave();
 	~Wave();
+	callback^ onChangeState;
 	IStateWave^ currentState;
 
 	void on();
 	void off();
 
-	void setImage(System::String^ path);
+	void setCallback(callback^ function);
 };
 
 ref class IStateWave

@@ -1,8 +1,7 @@
 #include "Waves.h"
 
-Wave::Wave(System::Windows::Forms::PictureBox^ container)
+Wave::Wave()
 {
-	this->waveContainer = container;
 	this->currentState = (gcnew OffWaveState(this));
 }
 
@@ -12,17 +11,17 @@ Wave::~Wave()
 
 void Wave::on()
 {
-	this->currentState->on(this);
+		this->currentState->on(this);
 }
 
 void Wave::off()
 {
-	this->currentState->off(this);
+		this->currentState->off(this);
 }
 
-void Wave::setImage(System::String ^ path)
+void Wave::setCallback(callback^ function)
 {
-	this->waveContainer->ImageLocation = path;
+	this->onChangeState = function;
 }
 
 void OnWaveState::setState(Wave ^ wave, IStateWave ^ newState)
@@ -34,7 +33,8 @@ void OnWaveState::setState(Wave ^ wave, IStateWave ^ newState)
 
 OnWaveState::OnWaveState(Wave ^ wave)
 {
-	wave->setImage(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\microwavesOn.gif");
+	if (wave->onChangeState != nullptr)
+		wave->onChangeState(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\microwavesOn.gif");
 }
 
 OnWaveState::~OnWaveState()
@@ -64,7 +64,8 @@ void OffWaveState::setState(Wave ^ wave, IStateWave ^ newState)
 
 OffWaveState::OffWaveState(Wave ^ wave)
 {
-	wave->setImage(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\microwavesOff.gif");
+	if (wave->onChangeState != nullptr)
+		wave->onChangeState(L"C:\\Personal\\Microwaves\\Microwave\\Microwave\\Resource\\microwavesOff.gif");
 }
 
 OffWaveState::~OffWaveState()

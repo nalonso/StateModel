@@ -15,13 +15,8 @@ void Countdown::setTextExternalLabel()
 	int minute = this->minute / 60;
 	int seconds = this->minute - (minute * 60);
 	auxLabel = (minute.ToString())->PadLeft(2, L'0') + ":" + (seconds.ToString())->PadLeft(2, L'0');
-	if (this->externalLabel != nullptr)
-		this->externalLabel->Text = auxLabel;
-}
-
-void Countdown::setExternalLabel(System::Windows::Forms::Label^ extLabel)
-{
-	this->externalLabel = extLabel;
+	if (this->onChangeState != nullptr)
+		this->onChangeState(auxLabel);
 }
 
 void Countdown::onTick(System::Object^ obj, System::EventArgs^ event)
@@ -42,6 +37,11 @@ void Countdown::onTick(System::Object^ obj, System::EventArgs^ event)
 		{
 		}
 	}
+}
+
+void Countdown::setCallback(callback^ function)
+{
+	this->onChangeState = function;
 }
 
 void Countdown::setTime()

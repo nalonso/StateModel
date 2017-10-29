@@ -1,6 +1,7 @@
 #pragma once
 #ifndef __CountdownTimer__
 #define __CountdownTimer__
+#include "TypeDef.h"
 #include "Microwave.h"
 #include <gcroot.h>
 #include <exception>
@@ -12,15 +13,16 @@ private:
 	Microwaves^ microwave;
 	int minute;
 	System::Windows::Forms::Timer^ timer;
-	System::Windows::Forms::Label^ externalLabel;
-
-	void setTextExternalLabel();
 
 public:
 	Countdown(Microwaves^ microwave);
 
+	void setTextExternalLabel();
+
+	callback^ onChangeState;
+
 	void onTick( System::Object^ obj, System::EventArgs^ event);
-	void setExternalLabel(System::Windows::Forms::Label^ extLabel);
+	void setCallback(callback^ function);
 
 	void setTime();
 	void setTime(int time);
